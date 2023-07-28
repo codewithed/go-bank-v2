@@ -12,3 +12,6 @@ migrateup:
 
 migratedown:
 	migrate -path db/migration -database "postgresql://root:dbsecret@localhost:5432/go-bank-v2?sslmode=disable" -verbose down
+
+sqlc:
+	sqlc generate
