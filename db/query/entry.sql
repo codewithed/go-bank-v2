@@ -14,10 +14,11 @@ SELECT * FROM entries
 LIMIT $1
 OFFSET $2;
 
--- name: UpdateEntry :exec
+-- name: UpdateEntry :one
 UPDATE entries 
 SET amount = $2, account_id = $3
-WHERE id = $1;
+WHERE id = $1
+RETURNING *;
 
 -- name: DeleteEntry :exec
 DELETE FROM entries WHERE id = $1;
