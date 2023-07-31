@@ -16,13 +16,14 @@ SELECT * FROM transfers
 LIMIT $1
 OFFSET $2;
 
--- name: UpdateTransfer :exec
+-- name: UpdateTransfer :one
 UPDATE transfers
 SET 
     from_account_id = $2,
     to_account_id = $3,
     amount = $4
-WHERE id = $1;
+WHERE id = $1
+RETURNING *;
 
 -- name: DeleteTransfer :exec
 DELETE FROM transfers WHERE id = $1;
