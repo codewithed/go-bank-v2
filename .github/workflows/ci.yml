@@ -13,6 +13,22 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: dbsecret
+          POSTGRES_DB: go-bank-v2
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - uses: actions/checkout@v3
 
@@ -21,6 +37,9 @@ jobs:
       with:
         go-version: '1.20'
 
+    - name: Run migrations
+      run: make migrateup
+      
     - name: Build
       run: go build -v ./...
 
