@@ -35,11 +35,11 @@ func (server *Server) createAccount(ctx *gin.Context) {
 			case "foreign_key_violation", "unique_violation":
 				ctx.JSON(http.StatusForbidden, errorResponse(err))
 			}
-			ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-			return
 		}
-		ctx.JSON(http.StatusOK, account)
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
 	}
+	ctx.JSON(http.StatusOK, account)
 }
 
 type getAccountRequest struct {
