@@ -1,6 +1,6 @@
 # go-bank-v2
 
-A banking app built with Go and PostgreSql
+A banking app built with Go and PostgreSql. 
 It provides APIs for the frontend to do following things:
 
 1. Create and manage bank accounts, which are composed of owner’s name, balance, and currency.
