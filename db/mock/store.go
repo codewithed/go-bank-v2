@@ -9,6 +9,7 @@ import (
 	reflect "reflect"
 
 	db "github.com/codewithed/go-bank-v2/db/sqlc"
+	"github.com/google/uuid"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -16,6 +17,16 @@ import (
 type MockStore struct {
 	ctrl     *gomock.Controller
 	recorder *MockStoreMockRecorder
+}
+
+// CreateSession implements db.Store.
+func (*MockStore) CreateSession(ctx context.Context, arg db.CreateSessionParams) (db.Session, error) {
+	panic("unimplemented")
+}
+
+// GetSessions implements db.Store.
+func (*MockStore) GetSessions(ctx context.Context, id uuid.UUID) (db.Session, error) {
+	panic("unimplemented")
 }
 
 // MockStoreMockRecorder is the mock recorder for MockStore.

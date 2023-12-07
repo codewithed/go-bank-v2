@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=dbsecret
+      - POSTGRES_DB=go-bank-v2
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_SOURCE=postgresql://root:dbsecret@db:5432/go-bank-v2?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    
