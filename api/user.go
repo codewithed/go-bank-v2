@@ -71,8 +71,9 @@ type LoginUserRequest struct {
 }
 
 type LoginUserResponse struct {
-	AccessToken string             `json:"access_token"`
-	User        createUserResponse `json:"user"`
+	AccessToken  string             `json:"access_token"`
+	RefreshToken string             `json:"refresh_token"`
+	User         createUserResponse `json:"user"`
 }
 
 func (server *Server) loginUser(ctx *gin.Context) {
@@ -98,15 +99,22 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		return
 	}
 
-	token, err := server.tokenMaker.CreateToken(user.Username, server.config.AccessTokenDuration)
+	accessToken, err := server.tokenMaker.CreateToken(user.Username, server.config.AccessTokenDuration)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	refreshToken, err := server.tokenMaker.CreateToken(user.Username, server.config.RefreshTokenDuration)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
 	rsp := LoginUserResponse{
-		AccessToken: token,
-		User:        newUserResponse(user),
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		User:         newUserResponse(user),
 	}
 
 	ctx.JSON(http.StatusOK, rsp)
