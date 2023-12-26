@@ -105,16 +105,9 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		return
 	}
 
-	refreshToken, err := server.tokenMaker.CreateToken(user.Username, server.config.RefreshTokenDuration)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
-		return
-	}
-
 	rsp := LoginUserResponse{
-		AccessToken:  accessToken,
-		RefreshToken: refreshToken,
-		User:         newUserResponse(user),
+		AccessToken: accessToken,
+		User:        newUserResponse(user),
 	}
 
 	ctx.JSON(http.StatusOK, rsp)
