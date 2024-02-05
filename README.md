@@ -6,6 +6,9 @@ This backend service is a simple bank. It provides APIs for the frontend to do f
 2. Record all balance changes to each of the account. So every time some money is added to or subtracted from the account, an account entry record will be created.
 3. Perform a money transfer between 2 accounts. This should happen within a transaction, so that either both accounts’ balance are updated successfully or none of them are.
 
+## Database Schema ⚙️
+![go-bank-v2-diagram](https://github.com/codewithed/go-bank-v2/assets/80069705/ccc55451-3597-4e91-a29d-d2ba53473bf3)
+
 ## Setup local development
 
 ### Install tools
